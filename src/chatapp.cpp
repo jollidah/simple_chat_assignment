@@ -119,52 +119,5 @@ bool SimpleChatApp::OnInit()
     //   return true;
   }
 
-#if 0
-
-  wxSizer *rootSizer = new wxBoxSizer(wxVERTICAL);
-  wxSizer *btnSizer = new wxBoxSizer(wxVERTICAL);
-  wxFrame *myFrame = new wxFrame(nullptr, wxID_ANY, wxT("HW3: Simple Chat"));
-  wxPanel *basePanel = new wxPanel(myFrame);
-  wxTextCtrl *txtIP = new wxTextCtrl(myFrame, wxID_ANY);
-
-  wxButton *btnStartServer = new wxButton(myFrame, ID_StartServer, wxT("Start a server instance"));
-  wxButton *btnJoinServer = new wxButton(myFrame, ID_JoinServer, wxT("Join as a client"));
-  // wxBitmap *Logo = new wxBitmap("Y:\\9q6080pqz9l91.png", wxBITMAP_TYPE_ANY);
-  rootSizer->Add(basePanel);
-
-  myFrame->SetSizer(rootSizer);
-
-  btnSizer->AddStretchSpacer(1);
-  btnSizer->Add(btnStartServer, 0, wxALIGN_CENTER | wxALL, 10);
-  btnSizer->Add(btnJoinServer, 0, wxALIGN_CENTER | wxALL, 10);
-  btnSizer->Add(txtIP, 0, wxALIGN_CENTER | wxALL, 10);
-  btnSizer->AddStretchSpacer(1);
-
-  rootSizer->Layout();
-  rootSizer->Add(btnSizer, 1, wxEXPAND, 5);
-
-  {
-    wxSize size = myFrame->FromDIP(wxSize(240, 300));
-    myFrame->SetMinSize(size);
-    myFrame->SetSize(size);
-    myFrame->Center();
-  };
-
-  myFrame->Show();
-
-  // Map events
-  Bind(wxEVT_COMMAND_BUTTON_CLICKED, [=](wxCommandEvent &)
-       { wxMessageBox("Feature not implemented!", this->GetAppName(), wxICON_ERROR); }, ID_StartServer);
-
-  Bind(wxEVT_COMMAND_BUTTON_CLICKED, [=](wxCommandEvent &)
-       { if(txtIP->GetValue().length() < 1)
-       {
-         wxMessageBox("Server IP is empty.", this->GetAppDisplayName(), wxICON_ERROR);
-         return;
-       }
-        wxMessageBox("Feature not implemented! : " + txtIP->GetValue(), this->GetAppName()); }, ID_JoinServer);
-
-#endif
-
   return true;
 }
