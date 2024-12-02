@@ -113,7 +113,7 @@ class chatFrame ( wx.Frame ):
         port = int(self.m_txtAddr.GetValue())
         client_socket = connect_to_server("127.0.0.1", port)
         chat_ui_frame = chatUI(None, port, client_socket)
-        threading.Thread(target=join_server, args=(chat_ui_frame.m_chatHistory, client_socket, chat_ui_frame.m_listUsers), daemon=True).start()
+        threading.Thread(target=join_server, args=(chat_ui_frame.m_chatHistory, client_socket, chat_ui_frame.m_listUsers, chat_ui_frame.connection_status), daemon=True).start()
         chat_ui_frame.Show()
 
     def createServer(self, event):

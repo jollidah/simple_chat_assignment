@@ -1,5 +1,7 @@
 import wx
 import wx.xrc
+import threading    
+import time
 
 import gettext
 from server.client import send_message, send_left_message
@@ -45,6 +47,16 @@ class chatUI ( wx.Frame ):
         # Add a horizontal line separator
         self.m_staticline1 = wx.StaticLine( self.m_panel3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
         bSizer8.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )
+
+        # Add a horizontal box sizer for the status indicator
+        bSizerStatus = wx.BoxSizer(wx.HORIZONTAL)
+
+        # Create a bitmap for the connection status indicator
+        self.connection_status = wx.StaticBitmap(self.m_panel3, wx.ID_ANY, wx.NullBitmap, wx.DefaultPosition, wx.Size(20, 20))
+        bSizerStatus.Add(self.connection_status, 0, wx.ALL, 5)
+
+        # Add the status sizer to the main sizer
+        bSizer8.Add(bSizerStatus, 0, wx.ALIGN_RIGHT, 5)
 
         # Create a vertical box sizer for text input and send button
         bSizer10 = wx.BoxSizer( wx.VERTICAL )
@@ -97,7 +109,24 @@ class chatUI ( wx.Frame ):
         self.Centre( wx.BOTH )
         self.client_socket = client_socket
 
-        # self.Bind(wx.EVT_CLOSE, self.on_close)
+        self.Bind(wx.EVT_CLOSE, self.on_close)
+
+        # Initialize the connection status
+        self.update_connection_status(True)
+
+    def update_connection_status(self, is_connected):
+        if is_connected:
+            # Show the connection status indicator
+            bitmap = wx.Bitmap(20, 20)
+            dc = wx.MemoryDC(bitmap)
+            dc.SetBrush(wx.Brush(wx.Colour(0, 255, 0)))  # Green
+            dc.DrawCircle(10, 10, 10)
+            dc.SelectObject(wx.NullBitmap)
+            self.connection_status.SetBitmap(bitmap)
+            self.connection_status.Show()
+        else:
+            # Hide the connection status indicator
+            self.connection_status.Hide()
 
     def on_send_button_click(self, event):
         message = self.m_tbText.GetValue()

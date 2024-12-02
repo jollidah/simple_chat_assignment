@@ -13,7 +13,7 @@ def connect_to_server(ip, port):
     client_socket.connect((ip, port))
     return client_socket
 
-def join_server(chat_display, client_socket, client_list):
+def join_server(chat_display, client_socket, client_list, status_indicator):
     client_socket.sendall((f"assign/?/?" + end_string).encode('utf-8'))
     while not my_seq:
         execute_command(client_socket.recv(1024).decode('utf-8'), chat_display)
@@ -32,8 +32,8 @@ def join_server(chat_display, client_socket, client_list):
                 print(e)
                 break
         chat_display.AppendText("Connection lost\n")
-
-    threading.Thread(target=receive_messages, daemon=True).start()
+        status_indicator.Hide()
+    threading.Thread(target=receive_messages, daemon=False).start()
 
 
 def execute_command(commands: str, chat_display: wx.TextCtrl) -> str:
