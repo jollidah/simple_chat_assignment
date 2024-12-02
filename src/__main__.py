@@ -309,5 +309,6 @@ class chatFrame(wx.Frame):
 if __name__ == "__main__":
     app = wx.App()
     frame = chatFrame(None)
+    frame.SetTitle("Simple Chat")
     frame.Show()
     app.MainLoop()
