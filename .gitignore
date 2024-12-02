@@ -1,4 +1,8 @@
 # vscode - cmake
 build/
 
+# Python
+.venv
+
+# macOS
 .DS_Store
