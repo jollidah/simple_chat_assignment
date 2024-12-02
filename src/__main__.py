@@ -208,6 +208,7 @@ class chatFrame(wx.Frame):
             wx.MessageBox(
                 f"{_addrtxt} is not a valid IP address", "Error", wx.ICON_ERROR
             )
+            return
 
         client_socket = connect_to_server(
             self.m_txtAddr.GetValue(), DEFAULT_PORT_NUMBER
