@@ -3,6 +3,7 @@ build/
 
 # Python
 .venv
+_pycache__
 
 # macOS
 .DS_Store
