@@ -197,6 +197,10 @@ class chatFrame(wx.Frame):
         self.Centre(wx.BOTH)
 
     def joinServer(self, event):
+        if len(self.m_txtAddr.GetValue()) < 1:
+            wx.MessageBox("Server address is empty!", "Error", wx.ICON_ERROR)
+            return
+
         client_socket = connect_to_server(
             self.m_txtAddr.GetValue(), DEFAULT_PORT_NUMBER
         )
