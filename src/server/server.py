@@ -67,9 +67,9 @@ def send_heartbeat_command(client_socket):
         except:
             break
 
-def create_server() -> tuple[str, int]:
+def create_server(port: int) -> tuple[str, int]:
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.bind(('127.0.0.1', 0))  # Bind to any available port
+    server_socket.bind(('127.0.0.1', port))  # Use specfied port instead
     server_socket.listen(5)
 
     ip, port = server_socket.getsockname()

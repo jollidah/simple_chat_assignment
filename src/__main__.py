@@ -13,6 +13,9 @@ from server.client import connect_to_server, join_server
 import gettext
 _ = gettext.gettext
 
+# CONSTANTS
+DEFAULT_PORT_NUMBER = 13371
+
 class chatFrame ( wx.Frame ):
 
     def __init__( self, parent ):
@@ -110,15 +113,14 @@ class chatFrame ( wx.Frame ):
         self.Centre( wx.BOTH )
 
     def joinServer(self, event):
-        port = int(self.m_txtAddr.GetValue())
-        client_socket = connect_to_server("127.0.0.1", port)
-        chat_ui_frame = chatUI(None, port, client_socket)
+        client_socket = connect_to_server(self.m_txtAddr.GetValue(), DEFAULT_PORT_NUMBER)
+        chat_ui_frame = chatUI(None, DEFAULT_PORT_NUMBER, client_socket)
         threading.Thread(target=join_server, args=(chat_ui_frame.m_chatHistory, client_socket, chat_ui_frame.m_listUsers, chat_ui_frame.connection_status), daemon=True).start()
         chat_ui_frame.Show()
 
     def createServer(self, event):
-        _, port = create_server()
-        self.m_txtAddr.SetValue(str(port))
+        _, port = create_server(DEFAULT_PORT_NUMBER)
+        self.m_txtAddr.SetValue("127.0.0.1")
         self.joinServer(event)
     
     def showIPAddress(self, event):
