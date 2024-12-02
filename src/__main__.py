@@ -197,9 +197,17 @@ class chatFrame(wx.Frame):
         self.Centre(wx.BOTH)
 
     def joinServer(self, event):
-        if len(self.m_txtAddr.GetValue()) < 1:
+        _addrtxt = self.m_txtAddr.GetValue()
+        if len(_addrtxt) < 1:
             wx.MessageBox("Server address is empty!", "Error", wx.ICON_ERROR)
             return
+
+        try:
+            socket.inet_pton(socket.AF_INET, _addrtxt)
+        except OSError:
+            wx.MessageBox(
+                f"{_addrtxt} is not a valid IP address", "Error", wx.ICON_ERROR
+            )
 
         client_socket = connect_to_server(
             self.m_txtAddr.GetValue(), DEFAULT_PORT_NUMBER
